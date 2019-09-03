@@ -40,15 +40,27 @@ function isObject(value) {
     value != null && (typeof value == 'object' || typeof value == 'function')
   );
 }
+
 function isObjectLike(value) {
   return value != null && typeof value == 'object';
 }
+
 function isFunction(value) {
   return Object.prototype.toString.call(value).slice(8, -1) == 'Function';
 }
+
 function isRegExp(value) {}
 function isDate(value) {}
 function isBuffer(value) {}
 function isSymbol(value) {}
 function isSet(value) {}
 function isMap(value) {}
+
+function isLength(value) {
+  return (
+    typeof value == 'number' &&
+    value > -1 &&
+    value % 1 == 0 &&
+    value < 9007199254740991
+  );
+}
