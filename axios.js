@@ -39,7 +39,7 @@ class Http {
         if (response) {
           return Promise.reject(response);
         } else {
-          console.error('连接到服务器失败');
+          console.error('连接服务器失败');
         }
       }
     );
@@ -78,10 +78,11 @@ class Http {
     return this.request(options);
   }
 
-  put(url, params, headers) {
+  put(url, data, params, headers) {
     const options = {
       method: 'put',
       url,
+      data,
       params,
       headers
     };
