@@ -10,3 +10,6 @@
 - prettier configuration
 - type detection
 - vuex status manage
+- scss color variable
+- scss layout style
+- vue configuration
