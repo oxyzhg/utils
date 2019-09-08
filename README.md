@@ -5,11 +5,11 @@
 ### List
 
 - axios
+- vuex store
 - eslist js configuration
 - eslint json configuration
 - prettier configuration
 - type detection
-- vuex status manage
 - scss color variable
 - scss layout style
 - vue configuration
