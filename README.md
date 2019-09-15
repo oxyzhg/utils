@@ -2,14 +2,22 @@
 
 > Most common function&configuration encapsulation
 
-### List
+### Configuration
 
-- axios
-- vuex store
-- eslist js configuration
-- eslint json configuration
+- eslist configuration(js/json)
 - prettier configuration
-- type detection
-- scss color variable
-- scss layout style
 - vue configuration
+
+### Modules
+
+- vuex store
+- scss variable
+- axios
+
+### Components
+
+- code-editor
+
+### Helper
+
+- type detection
