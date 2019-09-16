@@ -7,12 +7,12 @@ module.exports = {
   publicPath: '/',
   devServer: {
     port: 7001,
-    open: true
+    open: false
   },
   chainWebpack: config => {
     config.resolve.alias
       .set('@', resolve('src'))
       .set('utils', resolve('utils'))
-      .set('store', resolve('store'));
+      .set('components', resolve('components'));
   }
 };
