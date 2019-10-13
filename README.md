@@ -22,3 +22,4 @@
 
 - type detection
 - export xlsx/csv
+- request.content
