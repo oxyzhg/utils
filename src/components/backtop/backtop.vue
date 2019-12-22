@@ -3,8 +3,8 @@
     <div
       v-if="visible"
       :style="{
-        'right': styleRight,
-        'bottom':styleBottom
+        right: styleRight,
+        bottom: styleBottom
       }"
       class="backtop"
       @click.stop="handleClick"
@@ -87,8 +87,7 @@ export default {
       const el = this.el;
       const beginTime = Date.now();
       const beginValue = el.scrollTop;
-      const rAF =
-        window.requestAnimationFrame || (func => setTimeout(func, 16));
+      const rAF = window.requestAnimationFrame || (func => setTimeout(func, 16));
       const frameFunc = () => {
         const progress = (Date.now() - beginTime) / 500;
         if (progress < 1) {

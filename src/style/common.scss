@@ -1,0 +1,51 @@
+@import "./var";
+
+// Layout gap class
+@for $i from 0 through 12 {
+  .ml-#{$i} {
+    margin-left: $gap-size-base * $i;
+  }
+  .mt-#{$i} {
+    margin-top: $gap-size-base * $i;
+  }
+  .mr-#{$i} {
+    margin-right: $gap-size-base * $i;
+  }
+  .mb-#{$i} {
+    margin-bottom: $gap-size-base * $i;
+  }
+  .ma-#{$i} {
+    margin: $gap-size-base * $i;
+  }
+  .mlr-#{$i} {
+    margin-left: $gap-size-base * $i;
+    margin-right: $gap-size-base * $i;
+  }
+  .mtb-#{$i} {
+    margin-top: $gap-size-base * $i;
+    margin-bottom: $gap-size-base * $i;
+  }
+  .pl-#{$i} {
+    padding-left: $gap-size-base * $i;
+  }
+  .pt-#{$i} {
+    padding-top: $gap-size-base * $i;
+  }
+  .pr-#{$i} {
+    padding-right: $gap-size-base * $i;
+  }
+  .pb-#{$i} {
+    padding-bottom: $gap-size-base * $i;
+  }
+  .pa-#{$i} {
+    padding: $gap-size-base * $i;
+  }
+  .plr-#{$i} {
+    padding-left: $gap-size-base * $i;
+    padding-right: $gap-size-base * $i;
+  }
+  .ptb-#{$i} {
+    padding-top: $gap-size-base * $i;
+    padding-bottom: $gap-size-base * $i;
+  }
+}

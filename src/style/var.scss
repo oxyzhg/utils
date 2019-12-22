@@ -7,13 +7,11 @@ $antd-font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC',
 $base-color: #008aff;
 $light-color: #52baff;
 $dark-color: #006cd9;
-
 // 常用状态色
 $success-color: #19be6b;
 $info-color: #2db7f5;
 $wraning-color: #ff9900;
 $error-color: #ed4014;
-
 // 常用构造色
 $title-color: #17233d;
 $content-color: #515a6e;
@@ -30,3 +28,4 @@ $gap-size: 10px !default;
 $gap-size-md: 16px !default;
 $gap-size-lg: 24px !default;
 $gap-size-xl: 32px !default;
+$gap-size-base: 2px !default;

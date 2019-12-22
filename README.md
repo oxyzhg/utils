@@ -4,22 +4,26 @@
 
 ### Configuration
 
-- eslist configuration(js/json)
-- prettier configuration
-- vue configuration
+- [x] editorconfig
+- [ ] eslist configuration(js/json)
+- [x] prettier configuration
+- [x] vue configuration
+- [ ] webpack config
 
 ### Modules
 
-- vuex store
-- scss variable
-- axios
+- [x] axios http request
+- [x] scss variable
+- [x] vuex store
 
 ### Components
 
-- code-editor
+- [ ] code-editor
+- [x] backtop
 
 ### Helper
 
-- type detection
-- export xlsx/csv
-- request.content
+- [x] type validator
+- [x] data validator
+- [ ] export xlsx/csv
+- [ ] request.content
