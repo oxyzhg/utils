@@ -1,0 +1,42 @@
+$gap-base: 2px;
+$type-map: (
+  m: margin,
+  p: padding
+);
+
+$direction-map: (
+  t: top,
+  r: right,
+  b: bottom,
+  l: left
+);
+
+/**
+ * 单一盒子模型
+ */
+@mixin make-box($type, $direction, $size, $suffix: '') {
+  $ft: map-get($type-map, $type);
+  $fs: $size * $gap-base;
+  $classname: #{$type}#{$direction}#{$size}#{$suffix};
+
+  .#{$classname} {
+    @each $d, $fd in $direction-map {
+      @if str-index($direction, $d) {
+        #{$ft}-#{$fd}: $fs;
+      }
+    }
+
+    @if $direction == a {
+      #{$ft}: $fs;
+    }
+  }
+}
+
+/**
+ * 多类型盒子模型，可定制
+ */
+@mixin generate-box($type, $size) {
+  @each $direction in (t, r, b, l, tb, lr, a) {
+    @include make-box($type, $direction, $size);
+  }
+}

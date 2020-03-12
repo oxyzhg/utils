@@ -1,103 +1,113 @@
 import axios from 'axios';
 import qs from 'qs';
+import { notification } from 'antd';
+
+function defaultReqResolveInterceptor(config) {
+  const token = localStorage.getItem('token');
+
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+
+  if (config.method === 'post' || config.method === 'put') {
+    config.data = qs.stringify(config.data);
+  }
+
+  return config;
+}
+
+function defaultResResolveInterceptor(response) {
+  const data = response.data;
+  const errCode = data.errCode;
+
+  if (errCode === 0) {
+    return data;
+  } else {
+    notification.error({
+      message: 'Error',
+      description: data.errMsg
+    });
+  }
+  throw data;
+}
+
+function defaultResRejectInterceptor(error) {
+  if (error) {
+    return Promise.reject(error);
+  }
+}
 
 class Http {
-  constructor() {
-    this.xhr = this.create({
-      baseURL: 'http://localhost:3000',
-      timeout: 3000
+  constructor(baseURL, resInterceptor = defaultResResolveInterceptor, reqInterceptor = defaultReqResolveInterceptor) {
+    this.baseURL = baseURL;
+    this.resInterceptor = resInterceptor;
+    this.reqInterceptor = reqInterceptor;
+
+    this.xhr = this.init({
+      baseURL: 'http://localhost:5000',
+      timeout: 5000
     });
   }
 
-  create(config = {}, reqInterceptors, resInterceptors) {
+  init(config = {}) {
     const instance = axios.create(config);
     const contentType = 'application/x-www-form-urlencoded;charset=UTF-8';
 
     instance.defaults.headers.post['Content-Type'] = contentType;
     instance.defaults.headers.put['Content-Type'] = contentType;
-    instance.interceptors.request.use(
-      config => {
-        const token = localStorage.getItem('token');
-        if (token) {
-          config.headers.Authorization = `Bearer ${token}`;
-        }
-        if (config.method === 'post' || config.method === 'put') {
-          config.data = qs.stringify(config.data);
-        }
-        return config;
-      },
-      error => {
-        return Promise.reject(error);
-      }
-    );
-    instance.interceptors.response.use(
-      response => {
-        return response.data || response;
-      },
-      error => {
-        const { response } = error;
-        if (response) {
-          return Promise.reject(response);
-        } else {
-          console.error('连接服务器失败');
-        }
-      }
-    );
+
+    // request & response interceptors
+    instance.interceptors.request.use(this.reqInterceptor);
+    instance.interceptors.response.use(this.resInterceptor, defaultResRejectInterceptor);
+
     return instance;
   }
 
   request({ method, url, params, data, headers }) {
-    const options = {
-      method,
-      url,
-      params,
-      headers
-    };
+    const options = { method, url, params, headers };
+
     if (data) options.data = data;
+
     return this.xhr(options);
   }
 
   get(url, params, headers) {
-    const options = {
+    return this.request({
       method: 'get',
       url,
       params,
       headers
-    };
-    return this.request(options);
+    });
   }
 
   post(url, data, params, headers) {
-    const options = {
+    return this.request({
       method: 'post',
       url,
       data,
       params,
       headers
-    };
-    return this.request(options);
+    });
   }
 
   put(url, data, params, headers) {
-    const options = {
+    return this.request({
       method: 'put',
       url,
       data,
       params,
       headers
-    };
-    return this.request(options);
+    });
   }
 
   delete(url, params, headers) {
-    const options = {
+    return this.request({
       method: 'delete',
       url,
       params,
       headers
-    };
-    return this.request(options);
+    });
   }
 }
 
-export default new Http();
+export default Http;
