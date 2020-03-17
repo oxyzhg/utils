@@ -2,6 +2,10 @@ import axios from 'axios';
 import qs from 'qs';
 import { notification } from 'antd';
 
+/**
+ * @description 默认 request 拦截器
+ * @param {object} config
+ */
 function defaultReqResolveInterceptor(config) {
   const token = localStorage.getItem('token');
 
@@ -16,6 +20,10 @@ function defaultReqResolveInterceptor(config) {
   return config;
 }
 
+/**
+ * @description 默认 response 成功拦截器
+ * @param {object} response
+ */
 function defaultResResolveInterceptor(response) {
   const data = response.data;
   const errCode = data.errCode;
@@ -28,9 +36,15 @@ function defaultResResolveInterceptor(response) {
       description: data.errMsg
     });
   }
+
   throw data;
 }
 
+/**
+ * @description 默认 response 失败拦截器
+ * @param {object} error
+ * @returns
+ */
 function defaultResRejectInterceptor(error) {
   if (error) {
     return Promise.reject(error);
@@ -43,6 +57,7 @@ class Http {
     this.resInterceptor = resInterceptor;
     this.reqInterceptor = reqInterceptor;
 
+    // 初始化 XMLHttpRequest
     this.xhr = this.init({
       baseURL: 'http://localhost:5000',
       timeout: 5000
@@ -56,7 +71,7 @@ class Http {
     instance.defaults.headers.post['Content-Type'] = contentType;
     instance.defaults.headers.put['Content-Type'] = contentType;
 
-    // request & response interceptors
+    // interceptors
     instance.interceptors.request.use(this.reqInterceptor);
     instance.interceptors.response.use(this.resInterceptor, defaultResRejectInterceptor);
 

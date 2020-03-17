@@ -1,7 +1,6 @@
 let uid = 1;
 
-const parseError = xhr => {
-  console.log(xhr);
+const errorHandler = xhr => {
   let msg = '';
   let { responseText, responseType, status, statusText } = xhr;
   if (!responseText && responseType === 'text') {
@@ -19,8 +18,8 @@ const parseError = xhr => {
   return err;
 };
 
-const parseSuccess = xhr => {
-  let response = xhr.responseText;
+const successHandler = xhr => {
+  const response = xhr.responseText;
   if (response) {
     try {
       return JSON.parse(response);
@@ -31,8 +30,8 @@ const parseSuccess = xhr => {
 };
 
 class Uploader {
-  // 构造器，new的时候，合并默认配置
   constructor(option = {}) {
+    // 默认配置项
     const defaultOption = {
       url: '',
 
@@ -51,7 +50,7 @@ class Uploader {
     this._init();
   }
 
-  // 根据配置初始化，绑定事件
+  // 初始化配置，绑定事件
   _init() {
     this.uploadFiles = [];
     this.input = this._initInputElement(this.setting);
@@ -86,7 +85,7 @@ class Uploader {
     return el;
   }
 
-  // 绑定钩子
+  // 绑定钩子，链式调用更优雅
   on(event, cb) {
     if (event && typeof cb === 'function') {
       this[`on${event}`] = cb;
@@ -102,7 +101,7 @@ class Uploader {
     }
   }
 
-  // 交互方法
+  // 模拟交互事件
   chooseFile() {
     this.input.value = '';
     this.input.click();
@@ -203,16 +202,16 @@ class Uploader {
     xhr.onload = () => {
       if (xhr.status < 200 || xhr.status >= 300) {
         file.status = 'error';
-        this._callHook('error', parseError(xhr), file, this.uploadFiles);
+        this._callHook('error', errorHandler(xhr), file, this.uploadFiles);
       } else {
         file.status = 'success';
-        this._callHook('success', parseSuccess(xhr), file, this.uploadFiles);
+        this._callHook('success', successHandler(xhr), file, this.uploadFiles);
       }
     };
 
     xhr.onerror = e => {
       file.status = 'error';
-      this._callHook('error', parseError(xhr), file, this.uploadFiles);
+      this._callHook('error', errorHandler(xhr), file, this.uploadFiles);
     };
 
     xhr.onprogress = e => {
