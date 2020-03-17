@@ -11,9 +11,7 @@ $direction-map: (
   l: left
 );
 
-/**
- * 单一盒子模型
- */
+// 单一盒子
 @mixin make-box($type, $direction, $size, $suffix: '') {
   $ft: map-get($type-map, $type);
   $fs: $size * $gap-base;
@@ -32,9 +30,7 @@ $direction-map: (
   }
 }
 
-/**
- * 多类型盒子模型，可定制
- */
+// 多类型盒子(可定制)
 @mixin generate-box($type, $size) {
   @each $direction in (t, r, b, l, tb, lr, a) {
     @include make-box($type, $direction, $size);

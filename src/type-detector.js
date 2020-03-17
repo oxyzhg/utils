@@ -1,6 +1,12 @@
-// Base validator
+/**
+ * @description 变量数据类型检测
+ * @returns {Boolean}
+ */
+
+// Base detector
 const isType = type => target => `[object ${type}]` === Object.prototype.toString.call(target);
-// Generated validator
+
+// Derived detector
 export const isNumber = isType('Number');
 export const isString = isType('String');
 export const isBoolean = isType('Boolean');
